@@ -12,6 +12,7 @@ int main()
 
 	cout << "Praktikum1" << endl;
 	cout << "Test push Laptop" << endl;
+	cout << "test push pc" << endl;
 
     return 0;
 }
