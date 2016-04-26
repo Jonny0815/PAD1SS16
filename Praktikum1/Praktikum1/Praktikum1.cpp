@@ -12,28 +12,86 @@ using namespace std;
 
 class student {
 
+	
+
 private: 
+
+	student *next;
 	string name = "                     ";
 	string lastname = "                       ";
 	char gender = 0;
 	int mnumber = 0;
 	int finalmark = 0;
 
+
 public:
 
+
 	//set functions
-	int setname();
-	int setlastname();
-	int setgender();
-	int setmnumber();
-	int setfinalmark();
+	int setname(string h_name) {
+
+		name = h_name;
+
+		return 0;
+
+	};
+	int setlastname(string h_lastname) {
+
+		lastname = h_lastname;
+
+		return 0;
+
+	};
+	int setgender(char h_gender) {
+
+		gender = h_gender;
+
+		return 0;
+
+	};
+	int setmnumber(int h_mnumber) {
+
+		mnumber = h_mnumber;
+
+		return 0;
+
+	};
+	int setfinalmark(int h_finalmark) {
+
+		finalmark = h_finalmark;
+
+		return 0;
+
+	};
 
 	//get functions
-	string getname();
-	string getlastname();
-	char getgender();
-	int getmnumber();
-	int getfinalmark();
+	string getname() {
+
+		return name;
+
+	};
+	string getlastname() {
+
+		return lastname;
+
+	};
+	char getgender() {
+
+		return gender;
+
+	};
+	int getmnumber() {
+
+		return mnumber;
+
+	};
+	int getfinalmark() {
+
+		return finalmark;
+
+	};
+
+
 
 
 };
@@ -56,11 +114,6 @@ int main()
 
 
 
-
-int student::setlastname()
-{
-	return 0;
-}
 
 
 
