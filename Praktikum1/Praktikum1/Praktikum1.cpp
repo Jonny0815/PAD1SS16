@@ -28,6 +28,13 @@ public:
 
 
 	//set functions
+	int setnext(student h_next) {
+	
+		*next = h_next;
+
+		return 0;
+	
+	};
 	int setname(string h_name) {
 
 		name = h_name;
@@ -65,6 +72,11 @@ public:
 	};
 
 	//get functions
+	student getnext() {
+
+		return *next;
+
+	};
 	string getname() {
 
 		return name;
@@ -91,8 +103,46 @@ public:
 
 	};
 
+	//work functions
+	int list_student() {
+
+		cout << endl;
+		cout << "Vorname: " << name << endl;
+		cout << "Nachname: " << lastname << endl;
+		cout << "Geschlecht: " << gender << endl;
+		cout << "Matrikelnummer: " << mnumber << endl;
+		cout << "Abschlussnote: " << finalmark << endl<< endl;
+		cout << "---------------------------------------------------------" << endl;
 
 
+	};
+	int add_student();
+	student search_student();
+	student edit_student();
+	int import_student();
+	int export_student();
+
+
+};
+
+class head{
+
+private:
+
+	student *next;
+
+public:
+
+	int list_student() {
+
+		next.list_student();
+
+	};
+	int add_student();
+	student search_student();
+	student edit_student();
+	int import_student();
+	int export_student();
 
 };
 
@@ -104,9 +154,12 @@ student edit_student();
 int import_student();
 int export_student();
 
+
 int main()
 {
 
+	student *head = new student;
+	
 	menu();
 
     return 0;
@@ -154,5 +207,15 @@ int menu() {
 
 
 	return 0;
+
+};
+
+
+int list_student() {
+
+	cout << "---------------------------------------------------------" << endl;
+	cout << "                  Studentenauflistung                    " << endl;
+	cout << "---------------------------------------------------------" << endl << endl;
+	
 
 };
