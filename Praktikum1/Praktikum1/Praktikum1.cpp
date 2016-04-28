@@ -113,10 +113,18 @@ public:
 		cout << "Matrikelnummer: " << mnumber << endl;
 		cout << "Abschlussnote: " << finalmark << endl<< endl;
 		cout << "---------------------------------------------------------" << endl;
-
+		
 
 	};
-	int add_student();
+	int add_student() {
+	
+		cout << "---------------------------------------------------------" << endl;
+		cout << "                  Studenten hinzufügen                   " << endl;
+		cout << "---------------------------------------------------------" << endl << endl;
+
+		next->setname();
+	
+	};
 	student search_student();
 	student edit_student();
 	int import_student();
@@ -135,7 +143,7 @@ public:
 
 	int list_student() {
 
-		next.list_student();
+		//next.list_student();
 
 	};
 	int add_student();
@@ -158,7 +166,6 @@ int export_student();
 int main()
 {
 
-	student *head = new student;
 	
 	menu();
 
@@ -217,5 +224,5 @@ int list_student() {
 	cout << "                  Studentenauflistung                    " << endl;
 	cout << "---------------------------------------------------------" << endl << endl;
 	
-
+	return 0;
 };
