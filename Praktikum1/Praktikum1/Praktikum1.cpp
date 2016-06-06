@@ -1,5 +1,4 @@
-// Praktikum1.cpp : Defines the entry point for the console application.
-//
+
 
 #include "stdafx.h"
 #include <string>
@@ -14,9 +13,10 @@ class student {
 
 	
 
-private: 
+public: 
 
-	student *next;
+	student *next = NULL;
+	student *prev = NULL;
 	string name = "                     ";
 	string lastname = "                       ";
 	char gender = 0;
@@ -24,148 +24,85 @@ private:
 	int finalmark = 0;
 
 
-public:
 
-
-	//set functions
-	int setnext(student h_next) {
-	
-		*next = h_next;
-
-		return 0;
-	
-	};
-	int setname(string h_name) {
-
-		name = h_name;
-
-		return 0;
-
-	};
-	int setlastname(string h_lastname) {
-
-		lastname = h_lastname;
-
-		return 0;
-
-	};
-	int setgender(char h_gender) {
-
-		gender = h_gender;
-
-		return 0;
-
-	};
-	int setmnumber(int h_mnumber) {
-
-		mnumber = h_mnumber;
-
-		return 0;
-
-	};
-	int setfinalmark(int h_finalmark) {
-
-		finalmark = h_finalmark;
-
-		return 0;
-
-	};
-
-	//get functions
-	student getnext() {
-
-		return *next;
-
-	};
-	string getname() {
-
-		return name;
-
-	};
-	string getlastname() {
-
-		return lastname;
-
-	};
-	char getgender() {
-
-		return gender;
-
-	};
-	int getmnumber() {
-
-		return mnumber;
-
-	};
-	int getfinalmark() {
-
-		return finalmark;
-
-	};
 
 	//work functions
 	int list_student() {
 
 		cout << endl;
-		cout << "Vorname: " << name << endl;
-		cout << "Nachname: " << lastname << endl;
-		cout << "Geschlecht: " << gender << endl;
-		cout << "Matrikelnummer: " << mnumber << endl;
-		cout << "Abschlussnote: " << finalmark << endl<< endl;
+		cout << "Vorname        : " << name << endl;
+		cout << "Nachname       : " << lastname << endl;
+		cout << "Geschlecht     : " << gender << endl;
+		cout << "Matrikelnummer : " << mnumber << endl;
+		cout << "Abschlussnote  : " << finalmark << endl<< endl;
 		cout << "---------------------------------------------------------" << endl;
 		
+		if (next != NULL) {
+			next->list_student();
+		}
+		
+
+		return 0;
 
 	};
-	int add_student() {
 	
-		cout << "---------------------------------------------------------" << endl;
-		cout << "                  Studenten hinzufügen                   " << endl;
-		cout << "---------------------------------------------------------" << endl << endl;
+	int search_student(int mnr) {
 
-		next->setname();
-	
+		if (mnumber == mnr) {
+
+			cout << endl;
+			cout << "Vorname        : " << name << endl;
+			cout << "Nachname       : " << lastname << endl;
+			cout << "Geschlecht     : " << gender << endl;
+			cout << "Matrikelnummer : " << mnumber << endl;
+			cout << "Abschlussnote  : " << finalmark << endl << endl;
+			cout << "---------------------------------------------------------" << endl;
+
+		}
+		else {
+
+			next->search_student(mnr);
+
+		}
+
+		return 0;
 	};
-	student search_student();
-	student edit_student();
-	int import_student();
-	int export_student();
+	int edit_student() {
 
+		return 0;
+
+	};
+	int import_student() {
+
+		return 0;
+
+	};
+	int export_student() {
+
+		return 0;
+
+	};
+	
 
 };
 
-class head{
 
-private:
-
-	student *next;
-
-public:
-
-	int list_student() {
-
-		//next.list_student();
-
-	};
-	int add_student();
-	student search_student();
-	student edit_student();
-	int import_student();
-	int export_student();
-
-};
 
 int menu();
 int list_student();
 int add_student();
-student search_student();
-student edit_student();
+int search_student();
+int edit_student();
 int import_student();
 int export_student();
 
 
+student *head = NULL;
+student *tail = NULL;
+
 int main()
 {
-
+	
 	
 	menu();
 
@@ -196,19 +133,19 @@ int menu() {
 	
 
 	switch (menuselect) {
-	case '1': list_student();
+	case 1: list_student();
 		break;
-	case '2': add_student();
+	case 2: add_student();
 		break;
-	case '3': search_student();
+	case 3: search_student();
 		break;
-	case '4': edit_student();
+	case 4: edit_student();
 		break;
-	case '5': import_student();
+	case 5: import_student();
 		break;
-	case'6': export_student();
+	case 6: export_student();
 		break;
-	case'7': 
+	case 7: 
 		break;
 	}
 
@@ -223,6 +160,95 @@ int list_student() {
 	cout << "---------------------------------------------------------" << endl;
 	cout << "                  Studentenauflistung                    " << endl;
 	cout << "---------------------------------------------------------" << endl << endl;
+
+	head->list_student();
 	
+	menu();
+
 	return 0;
+};
+
+int add_student() {
+
+	student *pstud = new student;
+	string name;
+	string lastname;
+	char gender;
+	int nr;
+	int finalgrade;
+	cout << "---------------------------------------------------------" << endl;
+	cout << "                  Studenten hinzufügen                   " << endl;
+	cout << "---------------------------------------------------------" << endl << endl;
+	cout << "Vorname        : ";
+	cin >> name;
+	pstud->name = name;
+	cout <<"Nachname       : ";
+	cin >> lastname;
+	pstud->lastname = lastname;
+	cout <<"Geschlecht     : ";
+	cin >> gender;
+	pstud->gender = gender;
+	cout <<"Matrikelnummer : ";
+	cin >> nr;
+	pstud->mnumber = nr;
+	cout <<"Abschlussnote  : ";
+	cin >> finalgrade;
+	pstud->finalmark = finalgrade;
+
+	
+
+	if (head == NULL) {
+
+		head = pstud;
+		tail = pstud;
+
+	}
+	else {
+
+		pstud->next = head;
+		head->prev = pstud;
+		head = pstud;
+
+	}
+
+	menu();
+
+	return 0;
+
+};
+int search_student() {
+
+	cout << "---------------------------------------------------------" << endl;
+	cout << "                  Studenten suchen                       " << endl;
+	cout << "---------------------------------------------------------" << endl << endl;
+	cout << "Zu suchende Matrikelnummer eingeben: ";
+		int mnr;
+		cin >> mnr;
+	head->search_student(mnr);
+
+	menu();
+
+	return 0;
+
+};
+int edit_student() {
+
+	cout << "---------------------------------------------------------" << endl;
+	cout << "                  Studenten bearbeiten                       " << endl;
+	cout << "---------------------------------------------------------" << endl << endl;
+	cout << "Matrikelnummer des zu bearbeitenden Studenten eingeben: ";
+	int mnr;
+
+	return 0;
+
+};
+int import_student() {
+
+	return 0;
+
+};
+int export_student() {
+
+	return 0;
+
 };
