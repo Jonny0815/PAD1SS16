@@ -3,10 +3,23 @@
 #include "stdafx.h"
 #include <string>
 #include <iostream>
-
+#include <fstream>
 
 
 using namespace std;
+
+
+ifstream file_data;
+fstream file_export;
+
+
+class student;
+
+
+student *head = NULL;
+student *tail = NULL;
+
+
 
 
 class student {
@@ -60,24 +73,121 @@ public:
 
 		}
 		else {
-
-			next->search_student(mnr);
-
+			if (next != NULL) {
+				next->search_student(mnr);
+			}
 		}
 
-		return 0;
-	};
-	int edit_student() {
 
 		return 0;
-
 	};
-	int import_student() {
+
+	int edit_student(int mnr) {
+
+		string input;
+
+		if (mnumber == mnr) {
+
+			int choice;
+			cout << "1) Student bearbeiten" << endl;
+			cout << "2) Student löschen" << endl;
+			cin >> choice;
+			if (choice == 1) {
+
+
+
+				cout << "Vorname        : " << name;
+				getline(cin, input);
+				if (input != "") {
+					name = input;
+				}
+				input = "";
+
+				cout << "Nachname       : " << lastname;
+				getline(cin, input);
+				if (input != "") {
+					name = input;
+				}
+				input = "";
+				cout << "Geschlecht     : " << gender;
+				getline(cin, input);
+				if (input != "") {
+					name = input;
+				}
+				input = "";
+				cout << "Matrikelnummer : " << mnumber;
+				getline(cin, input);
+				if (input != "") {
+					name = input;
+				}
+				input = "";
+				cout << "Abschlussnote  : " << finalmark;
+				getline(cin, input);
+				if (input != "") {
+					name = input;
+				}
+				input = "";
+
+
+
+			}
+			else if (choice == 2) {
+
+				if (head == tail)
+				{
+					head = NULL;
+					tail = NULL;
+					delete this;
+				}
+				else {
+
+					prev->next = next;
+					next->prev = prev;
+					delete this;
+				}
+
+
+
+
+			}
+			}
+
+
+
+		
+		else {
+
+			if (next != NULL) {
+				next->edit_student(mnr);
+			}
+		}
+
 
 		return 0;
 
 	};
+
 	int export_student() {
+
+
+
+		file_export.open("export.csv");
+
+		
+		file_export << name << ";";
+		file_export << lastname << ";";
+		file_export << gender << ";";
+		file_export << mnumber << ";";
+		file_export << finalmark << ";";
+
+
+		file_export.close();
+
+		if (next != NULL) {
+			next->export_student();
+		}
+
+		
 
 		return 0;
 
@@ -97,8 +207,7 @@ int import_student();
 int export_student();
 
 
-student *head = NULL;
-student *tail = NULL;
+
 
 int main()
 {
@@ -161,7 +270,13 @@ int list_student() {
 	cout << "                  Studentenauflistung                    " << endl;
 	cout << "---------------------------------------------------------" << endl << endl;
 
-	head->list_student();
+	if (head != NULL) {
+		head->list_student();
+	}
+	else {
+
+		cout << "Keine Studenten in der Liste" << endl;
+	};
 	
 	menu();
 
@@ -238,16 +353,87 @@ int edit_student() {
 	cout << "---------------------------------------------------------" << endl << endl;
 	cout << "Matrikelnummer des zu bearbeitenden Studenten eingeben: ";
 	int mnr;
+	cin >> mnr;
+	head->edit_student(mnr);
 
 	return 0;
 
 };
 int import_student() {
 
+	string input_storage = "";
+	int zaehler_feld = 0;
+	student *stud = new student;
+
+
+	cout << "---------------------------------------------------------" << endl;
+	cout << "                  Studenten importieren                  " << endl;
+	cout << "---------------------------------------------------------" << endl << endl;
+
+	file_data.open("data.csv", ios::in);
+	if (file_data) {
+		while (getline(file_data, input_storage, ';'))
+		{
+			if (zaehler_feld == 0)
+				stud->name = input_storage;
+			if (zaehler_feld == 1)
+				stud->lastname = input_storage;
+			if (zaehler_feld == 2)
+				stud->gender = input_storage.at(0);
+			if (zaehler_feld == 3)
+				stud->mnumber = atoi(input_storage.c_str());
+			if (zaehler_feld == 4)
+				stud->finalmark = atof(input_storage.c_str());
+			zaehler_feld++;
+			if (zaehler_feld > 4) {
+				zaehler_feld = 0;
+			
+
+				if (head == NULL) {
+
+					head = stud;
+					tail = stud;
+
+				}
+				else {
+
+					stud->next = head;
+					head->prev = stud;
+					head = stud;
+
+				}
+
+
+			}
+		}
+		file_data.close();
+
+
+
+
+	}
+	else {
+		cout << "Fehler beim Lesen! \n" << endl;
+	}
+
+		
+	menu();
+			
+
 	return 0;
 
 };
 int export_student() {
+
+
+	cout << "---------------------------------------------------------" << endl;
+	cout << "                  Studenten exportieren                  " << endl;
+	cout << "---------------------------------------------------------" << endl << endl;
+
+
+	head->export_student();
+
+	
 
 	return 0;
 
