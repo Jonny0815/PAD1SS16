@@ -363,7 +363,12 @@ int import_student() {
 
 	string input_storage = "";
 	int zaehler_feld = 0;
-	student *stud = new student;
+	string name;
+	string lastname;
+	char gender;
+	int mnr;
+	float fm;
+	
 
 
 	cout << "---------------------------------------------------------" << endl;
@@ -375,19 +380,26 @@ int import_student() {
 		while (getline(file_data, input_storage, ';'))
 		{
 			if (zaehler_feld == 0)
-				stud->name = input_storage;
+				name = input_storage;
 			if (zaehler_feld == 1)
-				stud->lastname = input_storage;
+				lastname = input_storage;
 			if (zaehler_feld == 2)
-				stud->gender = input_storage.at(0);
+				gender = input_storage.at(0);
 			if (zaehler_feld == 3)
-				stud->mnumber = atoi(input_storage.c_str());
+				mnr = atoi(input_storage.c_str());
 			if (zaehler_feld == 4)
-				stud->finalmark = atof(input_storage.c_str());
+				fm = atof(input_storage.c_str());
 			zaehler_feld++;
 			if (zaehler_feld > 4) {
-				zaehler_feld = 0;
-			
+
+				student *stud = new student;
+				stud->name = name;
+				stud->lastname = lastname;
+				stud->gender = gender;
+				stud->mnumber = mnr;
+				stud->finalmark = fm;
+
+
 
 				if (head == NULL) {
 
@@ -404,6 +416,7 @@ int import_student() {
 				}
 
 
+				zaehler_feld = 0;
 			}
 		}
 		file_data.close();
