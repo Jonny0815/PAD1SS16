@@ -33,7 +33,7 @@ public:
 	string lastname = "                       ";
 	char gender = 0;
 	int mnumber = 0;
-	int finalmark = 0;
+	double finalmark = -1;
 
 
 
@@ -42,7 +42,7 @@ public:
 
 	
 
-	int list_student() {
+	void list_student() {
 
 		cout << endl;
 		cout << "Vorname        : " << name << endl;
@@ -57,11 +57,11 @@ public:
 		}
 
 
-		return 0;
+		
 
 	};
 
-	int search_student(int mnr) {
+	void search_student(int mnr) {
 
 		if (mnumber == mnr) {
 
@@ -81,16 +81,16 @@ public:
 		}
 
 
-		return 0;
+		
 	};
 
-	student edit_student(int mnr) {
+	student* edit_student(int mnr) {
 
 		
 
 		if (mnumber == mnr) {
 
-			return *this;
+			return this;
 		}
 
 		else {
@@ -98,6 +98,8 @@ public:
 			if (next != NULL) {
 				next->edit_student(mnr);
 			}
+
+			return NULL;
 		}
 
 
@@ -105,11 +107,11 @@ public:
 
 	};
 
-	int export_student() {
+	void export_student() {
 
 
 
-		file_export.open("export.csv");
+		
 
 
 		file_export << name << ";";
@@ -119,7 +121,7 @@ public:
 		file_export << finalmark << ";";
 
 
-		file_export.close();
+	
 
 		if (next != NULL) {
 			next->export_student();
@@ -127,10 +129,16 @@ public:
 
 
 
-		return 0;
+		
 
 	};
 
+	void delete_me() {
+
+		prev->next = next;
+		next->prev = prev;
+
+	};
 
 };
 
@@ -145,7 +153,7 @@ public:
 
 
 
-	int menu() {
+	void menu() {
 
 		int menuselect = 0;
 
@@ -156,9 +164,7 @@ public:
 		cout << "2) Studenten anlegen" << endl;
 		cout << "3) Studenten suchen" << endl;
 		cout << "4) Studenten bearbeiten" << endl;
-		cout << "5) Studenten importieren" << endl;
-		cout << "6) Studenten exportieren" << endl;
-		cout << "7) Pr0gramm beenden" << endl << endl;
+		cout << "5) Pr0gramm beenden" << endl << endl;
 		cout << "Auswahl: ";
 		cin >> menuselect;
 
@@ -172,21 +178,14 @@ public:
 			break;
 		case 4: edit_student();
 			break;
-		case 5: import_student();
-			break;
-		case 6: export_student();
-			break;
-		case 7:
+		case 5: 
 			break;
 		}
-
-
-		return 0;
 
 	};
 
 
-	int list_student() {
+	void list_student() {
 
 		cout << "---------------------------------------------------------" << endl;
 		cout << "                  Studentenauflistung                    " << endl;
@@ -202,16 +201,16 @@ public:
 
 		menu();
 
-		return 0;
+	
 	};
-	int add_student() {
+	void add_student() {
 
 		student *pstud = new student;
 		string name;
 		string lastname;
 		char gender;
 		int nr;
-		int finalgrade;
+		double finalgrade;
 		cout << "---------------------------------------------------------" << endl;
 		cout << "                  Studenten hinzufügen                   " << endl;
 		cout << "---------------------------------------------------------" << endl << endl;
@@ -249,10 +248,10 @@ public:
 
 		menu();
 
-		return 0;
+		
 
 	};
-	int search_student() {
+	void search_student() {
 
 		cout << "---------------------------------------------------------" << endl;
 		cout << "                  Studenten suchen                       " << endl;
@@ -264,10 +263,92 @@ public:
 
 		menu();
 
-		return 0;
+		
 
 	};
-	int edit_student() { return 0; };
+	void edit_student() { 
+		
+
+		student *tmpstud = new student;
+		string input;
+		
+
+		cout << "---------------------------------------------------------" << endl;
+		cout << "                  Studenten bearbeiten                       " << endl;
+		cout << "---------------------------------------------------------" << endl << endl;
+		cout << "Matrikelnummer des zu bearbeitenden Studenten eingeben: ";
+		int mnr;
+		cin >> mnr;
+		
+		tmpstud = head->edit_student(mnr);
+
+		int choice;
+		cout << "1) Student bearbeiten" << endl;
+		cout << "2) Student loeschen" << endl;
+		cin >> choice;
+		if (choice == 1) {
+
+
+
+			cout << "Vorname        : " << tmpstud->name << endl;
+			cin >> input;
+			if (input != "enter") {
+				tmpstud->name = input;
+			}
+			input = "";
+
+			cout << "Nachname       : " << tmpstud->lastname << endl;
+			cin >> input;
+			if (input != "enter") {
+				tmpstud->lastname = input;
+			}
+			input = "";
+			cout << "Geschlecht     : " << tmpstud->gender << endl;
+			cin >> input;
+			if (input != "enter") {
+				//tmpstud->gender = input;
+			}
+			input = "";
+			cout << "Matrikelnummer : " << tmpstud->mnumber << endl;
+			cin >> input;
+			if (input != "enter") {
+				//tmpstud->mnumber = input;
+			}
+			input = "";
+			cout << "Abschlussnote  : " << tmpstud->finalmark << endl;
+			cin >> input;
+			if (input != "enter") {
+				//tmpstud->finalmark = input;
+			}
+			input = "";
+
+
+
+		}
+		else if (choice == 2) {
+
+			if (head == tail)
+			{
+				head = NULL;
+				tail = NULL;
+				
+			}
+			else {
+
+				
+				tmpstud->delete_me();
+				
+			}
+
+
+
+
+		}
+		
+		menu();
+
+		 };
+	
 	int import_student() {
 
 		string input_storage = "";
@@ -276,13 +357,11 @@ public:
 		string lastname;
 		char gender;
 		int mnr;
-		float fm;
+		double fm;
 
 
 
-		cout << "---------------------------------------------------------" << endl;
-		cout << "                  Studenten importieren                  " << endl;
-		cout << "---------------------------------------------------------" << endl << endl;
+
 
 		file_data.open("data.csv", ios::in);
 		if (file_data) {
@@ -339,13 +418,13 @@ public:
 		}
 
 
-		menu();
 
 
 		return 0;
 
 	};
-	int export_student() {
+
+	void export_student() {
 
 
 		cout << "---------------------------------------------------------" << endl;
@@ -355,21 +434,23 @@ public:
 
 		head->export_student();
 
-
-
-		return 0;
-
 	};
 
 
 };
 
 
+
 int main()
 {
 	slist studlist;
 
-	studlist.menu();
 
+	studlist.import_student();
+	studlist.menu();
+	file_export.open("data.csv");
+	studlist.export_student();
+	file_export.close();
 	return 0;
 }
+

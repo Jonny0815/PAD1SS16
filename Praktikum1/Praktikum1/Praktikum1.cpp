@@ -171,7 +171,7 @@ public:
 
 
 
-		file_export.open("export.csv");
+		
 
 		
 		file_export << name << ";";
@@ -180,8 +180,9 @@ public:
 		file_export << mnumber << ";";
 		file_export << finalmark << ";";
 
+		
 
-		file_export.close();
+		cout << "done" << endl;
 
 		if (next != NULL) {
 			next->export_student();
@@ -214,8 +215,10 @@ int main()
 	
 	import_student();
 	menu();
+	file_export.open("export.csv");
 	head->export_student();
-	cout << "Saved";
+	file_export.close();
+	cout << "Saved" << endl;
     return 0;
 }
 
@@ -249,7 +252,7 @@ int menu() {
 		break;
 	case 4: edit_student();
 		break;
-	case 5: exit
+	case 5:
 		break;
 	}
 
@@ -423,7 +426,7 @@ int import_student() {
 	}
 
 		
-	menu();
+	
 			
 
 	return 0;
@@ -436,8 +439,9 @@ int export_student() {
 	cout << "                  Studenten exportieren                  " << endl;
 	cout << "---------------------------------------------------------" << endl << endl;
 
-
 	
+
+	head->export_student();
 
 	
 
