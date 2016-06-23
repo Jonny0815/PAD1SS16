@@ -20,7 +20,6 @@ class slist;
 
 
 
-
 class student {
 
 
@@ -63,30 +62,30 @@ public:
 
 	void search_student(int mnr) {
 
-		if (mnumber == mnr) {
+if (mnumber == mnr) {
 
-			cout << endl;
-			cout << "Vorname        : " << name << endl;
-			cout << "Nachname       : " << lastname << endl;
-			cout << "Geschlecht     : " << gender << endl;
-			cout << "Matrikelnummer : " << mnumber << endl;
-			cout << "Abschlussnote  : " << finalmark << endl << endl;
-			cout << "---------------------------------------------------------" << endl;
+	cout << endl;
+	cout << "Vorname        : " << name << endl;
+	cout << "Nachname       : " << lastname << endl;
+	cout << "Geschlecht     : " << gender << endl;
+	cout << "Matrikelnummer : " << mnumber << endl;
+	cout << "Abschlussnote  : " << finalmark << endl << endl;
+	cout << "---------------------------------------------------------" << endl;
 
-		}
-		else {
-			if (next != NULL) {
-				next->search_student(mnr);
-			}
-		}
+}
+else {
+	if (next != NULL) {
+		next->search_student(mnr);
+	}
+}
 
 
-		
+
 	};
 
 	student* edit_student(int mnr) {
 
-		
+
 
 		if (mnumber == mnr) {
 
@@ -99,11 +98,11 @@ public:
 				next->edit_student(mnr);
 			}
 
-			return NULL;
+			
 		}
 
 
-		
+
 
 	};
 
@@ -111,7 +110,7 @@ public:
 
 
 
-		
+
 
 
 		file_export << name << ";";
@@ -121,7 +120,7 @@ public:
 		file_export << finalmark << ";";
 
 
-	
+
 
 		if (next != NULL) {
 			next->export_student();
@@ -129,16 +128,11 @@ public:
 
 
 
-		
+
 
 	};
 
-	void delete_me() {
 
-		prev->next = next;
-		next->prev = prev;
-
-	};
 
 };
 
@@ -150,6 +144,31 @@ private:
 	student *tail = NULL;
 
 public:
+
+	void delete_stud(student *hstud) {
+
+		if (hstud->prev == NULL && hstud->next == NULL) {
+
+			hstud = NULL;
+			head = NULL;
+			tail = NULL;
+			return;
+		}
+		if (hstud->next == NULL) {
+
+			hstud = hstud->prev;
+			hstud->next = NULL;
+			return;
+
+		}
+		if (hstud->prev == NULL) {
+			hstud = hstud->next;
+			hstud->prev = NULL;
+			return;
+		}
+
+
+	}
 
 
 
@@ -232,7 +251,7 @@ public:
 
 
 
-		if (head == NULL) {
+		if (head == NULL && tail == NULL) {
 
 			head = pstud;
 			tail = pstud;
@@ -248,7 +267,7 @@ public:
 
 		menu();
 
-		
+
 
 	};
 	void search_student() {
@@ -263,15 +282,15 @@ public:
 
 		menu();
 
-		
+
 
 	};
-	void edit_student() { 
-		
+	void edit_student() {
+
 
 		student *tmpstud = new student;
 		string input;
-		
+
 
 		cout << "---------------------------------------------------------" << endl;
 		cout << "                  Studenten bearbeiten                       " << endl;
@@ -279,7 +298,7 @@ public:
 		cout << "Matrikelnummer des zu bearbeitenden Studenten eingeben: ";
 		int mnr;
 		cin >> mnr;
-		
+
 		tmpstud = head->edit_student(mnr);
 
 		int choice;
@@ -306,19 +325,14 @@ public:
 			cout << "Geschlecht     : " << tmpstud->gender << endl;
 			cin >> input;
 			if (input != "enter") {
-				//tmpstud->gender = input;
+				tmpstud->gender = input[0];
 			}
 			input = "";
 			cout << "Matrikelnummer : " << tmpstud->mnumber << endl;
-			cin >> input;
-			if (input != "enter") {
-				//tmpstud->mnumber = input;
-			}
-			input = "";
 			cout << "Abschlussnote  : " << tmpstud->finalmark << endl;
 			cin >> input;
 			if (input != "enter") {
-				//tmpstud->finalmark = input;
+				tmpstud->finalmark = atof(input.c_str());
 			}
 			input = "";
 
@@ -327,23 +341,11 @@ public:
 		}
 		else if (choice == 2) {
 
-			if (head == tail)
-			{
-				head = NULL;
-				tail = NULL;
-				
+			delete_stud(tmpstud);
+
+
+			
 			}
-			else {
-
-				
-				tmpstud->delete_me();
-				
-			}
-
-
-
-
-		}
 		
 		menu();
 
